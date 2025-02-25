@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
 import useCurrencyInfo from "./hooks/useCurrencyInfo";
 import { Inputbox } from "./components/index";
