@@ -1,4 +1,4 @@
-import React, { useId } from "react";
+import React, { useId, useState } from "react";
 
 const Inputbox = ({
   label,
@@ -13,6 +13,8 @@ const Inputbox = ({
 }) => {
   const inputId = useId();
   const selectId = useId();
+  const [isFocused, setIsFocused] = useState(false);
+  const [inputValue, setInputValue] = useState(amount.toString());
 
   return (
     <div className={`flex bg-white p-3 rounded-lg test-sm ${classname}`}>
@@ -26,12 +28,25 @@ const Inputbox = ({
           id={inputId}
           className="outline-none w-full bg-transparent py-1.5"
           placeholder="Amount..."
-          value={amount}
+          value={isFocused && amount === 0 ? "" : amount}
           disabled={amountDisabled}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => {
+            if (inputValue === "") {
+              setInputValue("0"); // Reset to "0" if empty on blur
+              onAmountChange(0);
+            }
+            setIsFocused(false)
+          }}
+          
           onChange={(e) => {
             const value = e.target.value;
+            setInputValue(value);
             if (onAmountChange && value !== "") {
               onAmountChange(Number(value));
+            }
+            if (value !== "") {
+              onAmountChange(Number(value)); // Update the state if it's not empty
             }
           }}
         />

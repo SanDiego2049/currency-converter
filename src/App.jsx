@@ -13,22 +13,15 @@ function App() {
   const options = Object.keys(currencyInfo);
 
   const convert = () => {
-    if (!currencyInfo[to]) {
-      setConvertedAmount(0);
-      return;
-    }
     setConvertedAmount((amount * currencyInfo[to]).toFixed(2));
   };
 
   const swap = () => {
     setFrom(to);
     setTo(from);
+    setAmount(0);
     setConvertedAmount(0);
   };
-
-  useEffect(() => {
-    convert();
-  }, [from, to]);
 
   return (
     <>
@@ -78,7 +71,7 @@ function App() {
                 className="w-full bg-blue-600 py-2 rounded-lg mt-3 text-white font-semibold"
                 type="submit"
               >
-                CONVERT {from.toUpperCase()} to {to.toUpperCase()}
+                Convert {from.toUpperCase()} to {to.toUpperCase()}
               </button>
             </form>
           </div>
